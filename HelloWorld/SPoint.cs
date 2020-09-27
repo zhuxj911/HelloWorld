@@ -31,7 +31,21 @@ namespace HelloWorld
     /// </summary>
     public class SPoint
     {
-        private string name;
+        private static int count=0;
+
+        private int id;
+        public int Id
+        {
+            get => id;
+        }
+
+        //private string name;
+        public String Name
+        {
+            get;
+            set;
+        }
+
         private double x;
         private double y;
         private double z;
@@ -39,20 +53,23 @@ namespace HelloWorld
         #region 构造函数
         public SPoint()
         {
-            name = "";
+            this.id = ++count;
+            Name = "";
             x = y = z = 0;
         }
 
         public SPoint(string name, double x, double y, double z)
         {
-            this.name = name;
+            this.id = ++count;
+            this.Name = name;
             this.x = x;
             this.y = y;
             this.z = z;
         }
 
         public SPoint(double x, double y, double z)
-        {          
+        {
+            this.id = ++count;
             this.x = x;
             this.y = y;
             this.z = z;
@@ -60,18 +77,30 @@ namespace HelloWorld
 
         public SPoint(double x, double y)
         {
+            this.id = ++count;
             this.x = x;
             this.y = y;
         }
 
         public override string ToString()
         {
-            if(name == null || name == "")
-                return $"{x},{y},{z}";
+            //if(Name == null || Name == " ") //System.String -> string
+            if ( string.IsNullOrWhiteSpace(Name) )
+                return $"{Id}, {x},{y},{z}";
             else
-                return $"{name},{x},{y},{z}";
+                return $"{Id}, {Name},{x},{Y},{z}";
         }
         #endregion
+
+        public double X
+        {
+            get => x;
+            set
+            {
+                if (value >= 0)
+                    x = value;
+            }
+        }
 
         public double Y
         {
@@ -85,7 +114,25 @@ namespace HelloWorld
                     y = value;
             }
         }
-    
+
+        public double Z
+        {
+            get
+            {
+                return z;
+            }
+            set
+            {
+                if (value >= 0)
+                    z = value;
+            }
+        }
+
+        /// <summary>
+        /// 计算该点至p2点的距离
+        /// </summary>
+        /// <param name="p2">目标点p2</param>
+        /// <returns>该点至p2点的距离</returns>
         public double Distance(SPoint p2)
         {           
             return Distance(this, p2);
@@ -93,6 +140,7 @@ namespace HelloWorld
 
         public static double Distance(SPoint p1, SPoint p2)
         {           
+           
             double dx = p1.x - p2.x;
             double dy = p1.y - p2.y;
             return Math.Sqrt(dx * dx + dy * dy);

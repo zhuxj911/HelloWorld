@@ -63,11 +63,6 @@ namespace HelloWorld
             SPoint p1 = new SPoint();
             Console.WriteLine(p1);
 
-         
-           
-            
-
-
             SPoint p2 = new SPoint("2", 200, 200, 200);
             Console.WriteLine(p2);
 
@@ -81,7 +76,11 @@ namespace HelloWorld
             SPoint p4 = new SPoint(400, 400);
             p4.Y = -500;
             Console.WriteLine(p4);
-            
+
+            SPoint p5 = p3;
+            p5.Y = -500;
+            Console.WriteLine(p5);
+
 
             double d4 = SPoint.Distance(p3, p4);
 
@@ -89,6 +88,10 @@ namespace HelloWorld
             Console.WriteLine(c1);
             c1.R = 20;
             Console.WriteLine(c1);
+
+            double rad = ZXY.SurMath.DMStoRad(1.2030);
+            //0.0234165007975906
+            Console.WriteLine($"1 20 30 -> Rad:{rad}");
         }
     }
 }

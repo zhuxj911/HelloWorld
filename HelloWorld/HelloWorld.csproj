@@ -5,4 +5,12 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="README.markdown" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SurMath\SurMath.csproj" />
+  </ItemGroup>
+
 </Project>
