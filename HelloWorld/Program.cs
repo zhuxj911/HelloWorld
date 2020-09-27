@@ -1,67 +1,72 @@
 ﻿using System;
-using System.Runtime.InteropServices;
-
-/*
-块注释
- */
-
-//行注释
 
 namespace HelloWorld
 {
-    /// <summary>
-    /// 1. 注释
-    ///    1.1 块注释
-    ///        /* /**/  */
-    ///    1.2 行注释  //
-    /// 2. 变量
-    ///     2.1 简单变量
-    ///     2.1.1 数值 int  long float double byte bit char
-    ///     2.1.2 文本 string  ==> char[]
-    ///     2.2 自定义变量
-    ///         struct
-    ///         enum
-    ///
-    ///         class  类
-    ///         inerface  接口
-    /// 3. 变量的定义位置
-    ///     3.1？ 命名空间外  ×
-    ///     3.2？ 命名空间内， 类的定义外  ×
-    ///     3.3？ 类的内部，函数或方法体外 √
-    ///            类的成员变量  前边可加修饰符 readonly static public const
-    ///     3.4？ 方法或函数内 √
-    ///             局部变量
-    ///     3.5？ 函数或方法的参数定义  √
-    ///             函数的形参
-    /// 4. 变量的静态与非静态 static 与 non static
-    /// 类class 与 对象Object 实例 Instance
-    ///
-    /// 5. 变量的 值类型 与 引用类型
-    /// 硬盘（磁盘、机械硬盘、SSD）==> 缓存（二级缓存） => 内存（RAM） => CPU
-    /// 
-    /// 值类型： Value Type
-    /// int  long float double byte bit char
-    /// bool
-    /// struct
-    /// enum
-    /// DateTime
-    /// 
-    /// 引用类型
-    /// class
-    /// interface
-    /// 
-    /// 数组
-    /// 
-    /// string
-    /// 
-    /// </summary>
+    //public delegate void fff();
 
     class Program
     {
         static void Main(string[] args)
         {
+
+            #region 值类型与引用类型测试
+            //Type t = typeof(DateTime);
+            //Type t = typeof(string);
+            //Type t = typeof(IShape);
+            //Type t = typeof(Action);
+            Type t = typeof(int[]);
+
+            if (t.IsValueType)
+            {
+                Console.WriteLine($"{t.Name} is ValueType");
+            }
+            else
+                Console.WriteLine($"{t.Name} is ReferenceType");
+            #endregion
+
+            #region 排序算法：冒泡排序与快速排序
+            /* 
+			//int[] arr = new int[] { 9, 3, 1, 4, 2, 7, 8, 6, 5, -100, 0, -30, -88 };
+            //List<int> list = new List<int>(arr);
+
+            Random rd = new Random();
+            int n = 10000000;
+            List<int> list = new List<int>(n);
+            for (int i = 0; i < n; i++)
+            {
+                list.Add(rd.Next(1, n * 100));
+            }
+
+            //Console.WriteLine($"排序前的数据：");
+            //Console.WriteLine(string.Join(',', arr));
+
+            //DateTime dt1 = DateTime.Now;
+            //Sort.BubbleSort(arr);
+            //DateTime dt2 = DateTime.Now;
+
+            //Console.WriteLine($"排序后的数据：");
+            //Console.WriteLine(string.Join(',', arr));
+
+            //Console.WriteLine($"排序前的时间：{dt1}");
+            //Console.WriteLine($"排序后的时间：{dt2}");
+
+            Stopwatch st1 = new Stopwatch(); //计时器用来计算算法要用多久时间
+            st1.Start();
+            //Sort.BubbleSort(list);
+            Sort.QuickSort(list);
+            st1.Stop();
+            Console.WriteLine("运行时间：" + st1.Elapsed);
+            //Console.WriteLine(string.Join(',', list));
+			*/
+            #endregion
+
             SPoint p1 = new SPoint();
             Console.WriteLine(p1);
+
+         
+           
+            
+
 
             SPoint p2 = new SPoint("2", 200, 200, 200);
             Console.WriteLine(p2);
