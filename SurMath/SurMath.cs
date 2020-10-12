@@ -18,7 +18,7 @@ namespace ZXY
         /// <param name="dmsAngle">度分秒角度:1.2030</param>
         /// <returns>(度, 分, 秒)</returns>
         public static (int d, int m, double s) DMStoDMS(double dmsAngle)
-        {           
+        {
             dmsAngle *= 10000;
             int angle = (int)dmsAngle;
             int d = angle / 10000;
@@ -61,7 +61,7 @@ namespace ZXY
         /// <param name="radAngle">弧度角度值</param>
         /// <returns>度分秒角度:1.2030</returns>
         public static (int d, int m, double s) Rad2DMS(double radAngle)
-        { 
+        {
             radAngle *= TOSECOND;
             int angle = (int)radAngle;
             int d = angle / 3600;
@@ -105,12 +105,26 @@ namespace ZXY
         /// <param name="yA">A的Y坐标</param>
         /// <param name="xB">B的X坐标</param>
         /// <param name="yB">B的Y坐标</param>
-        /// <returns>A->B的坐标方位角，单位：弧度</returns>
-        public static double Azimuth(double xA, double yA, double xB, double yB)
+        /// <returns>A->B的坐标方位角，单位：弧度与距离</returns>
+        public static (double a, double d) Azimuth(double xA, double yA, double xB, double yB)
         {
             double dx = xB - xA;
             double dy = yB - yA;
-            return Math.Atan2(dy, dx) + (dy < 0 ? 1 : 0) * TWOPI;
+            double a = Math.Atan2(dy, dx) + (dy < 0 ? 1 : 0) * TWOPI;
+            double d = Math.Sqrt(dx * dx + dy * dy);
+            return (a, d);
+        }
+
+        /// <summary>
+        /// 规化角度值至0−2π
+        /// </summary>
+        /// <param name="rad">弧度制角度</param>
+        /// <returns>0−2π之间的角度</returns>
+        public static double To0_2PI(double rad)
+        {
+            int f = rad >= 0 ? 0 : 1;
+            int n = (int)(rad / TWOPI);
+            return rad - n * TWOPI + f * TWOPI;
         }
     }
 }

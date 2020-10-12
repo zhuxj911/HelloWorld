@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using ZXY;
 
 namespace HelloWorld
 {
@@ -148,11 +149,11 @@ namespace HelloWorld
         }
 
         public static double Distance(SPoint p1, SPoint p2)
-        {           
-           
-            double dx = p1.x - p2.x;
-            double dy = p1.y - p2.y;
-            return Math.Sqrt(dx * dx + dy * dy);
+        {
+            //double dx = p1.x - p2.x;
+            //double dy = p1.y - p2.y;
+            //return Math.Sqrt(dx * dx + dy * dy);
+            return SurMath.Azimuth(p1.X, p1.Y, p2.X, p2.Y).d;
         }
     }
 }
