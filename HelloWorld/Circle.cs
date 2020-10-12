@@ -26,7 +26,6 @@ namespace HelloWorld
             }
         }
 
-
         public Circle(double r)
         {
             this.R = r;
@@ -43,9 +42,7 @@ namespace HelloWorld
         }
 
         public override string ToString()
-        {
-            // return string.Format("圆的半径{0}，面积{1}， 周长{2}", this.r, this.CircleA(), this.CircleC());
-
+        {        
             return $"圆的半径{R}，面积{Area}， 周长{this.Length}";
         }
     }

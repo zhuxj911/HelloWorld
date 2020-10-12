@@ -3,11 +3,30 @@
 namespace HelloWorld
 {
     //public delegate void fff();
+    public enum Color { Red, Green, Blue }
 
     class Program
     {
         static void Main(string[] args)
         {
+            #region 枚举与switch case
+            Color c = (Color)(new Random()).Next(0, 3);
+            switch (c)
+            {
+                case Color.Red:
+                    Console.WriteLine("The color is red");
+                    break;
+                case Color.Green:
+                    Console.WriteLine("The color is green");
+                    break;
+                case Color.Blue:
+                    Console.WriteLine("The color is blue");
+                    break;
+                default:
+                    Console.WriteLine("The color is unknown.");
+                    break;
+            }
+            #endregion
 
             #region 值类型与引用类型测试
             //Type t = typeof(DateTime);

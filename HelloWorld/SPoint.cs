@@ -31,7 +31,7 @@ namespace HelloWorld
     /// </summary>
     public class SPoint
     {
-        private static int count=0;
+        private static int count;
 
         private int id;
         public int Id
@@ -51,6 +51,15 @@ namespace HelloWorld
         private double z;
 
         #region 构造函数
+
+        /// <summary>
+        /// 静态构造函数
+        /// </summary>
+        static SPoint()
+        {
+            count = 0;
+        }
+
         public SPoint()
         {
             this.id = ++count;
