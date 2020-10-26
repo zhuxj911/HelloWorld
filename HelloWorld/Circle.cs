@@ -2,13 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace HelloWorld
+namespace DrawShape
 {
-    public class Circle
+    public class Circle : Shape
     {       
-        private double r;     
-        private double c;     
-        private double a;
+        private double r; 
 
         private SPoint center;
 
@@ -20,8 +18,8 @@ namespace HelloWorld
                 if (value >= 0)
                 {
                     r = value;
-                    c = Math.PI * r * 2;
-                    a = Math.PI * r * r;
+                    length = Math.PI * r * 2;
+                    area = Math.PI * r * r;
                 }
             }
         }
@@ -29,21 +27,16 @@ namespace HelloWorld
         public Circle(double r)
         {
             this.R = r;
-        }
-
-        public double Area
-        {
-            get => a;
-        }
-
-        public double Length
-        {
-            get => c;
-        }
+        } 
 
         public override string ToString()
         {        
             return $"圆的半径{R}，面积{Area}， 周长{this.Length}";
+        }
+
+        public override void Drawing()
+        {
+            Console.WriteLine(this);
         }
     }
 }

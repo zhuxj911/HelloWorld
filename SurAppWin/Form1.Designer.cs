@@ -67,7 +67,6 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "起点坐标";
-            this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
             // 
             // textBox_yA
             // 
@@ -184,8 +183,7 @@
             this.groupBox2.Size = new System.Drawing.Size(516, 74);
             this.groupBox2.TabIndex = 0;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "方向点坐标";
-            this.groupBox2.Enter += new System.EventHandler(this.groupBox1_Enter);
+            this.groupBox2.Text = "方向点坐标";    
             // 
             // textBox_d
             // 
@@ -223,7 +221,6 @@
             this.groupBox3.TabIndex = 0;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "计算结果";
-            this.groupBox3.Enter += new System.EventHandler(this.groupBox1_Enter);
             // 
             // button1
             // 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using ZXY;
 
-namespace HelloWorld
+namespace DrawShape
 {
     /// <summary>
     /// 测量点
@@ -30,7 +30,7 @@ namespace HelloWorld
     ///     因为类中的数据一般情况都是封装起来的 private/protected
     ///     就需要 一定的规则 来设置/修改 或者 访问数据
     /// </summary>
-    public class SPoint
+    public class SPoint : Shape
     {
         private static int count;
 
@@ -154,6 +154,11 @@ namespace HelloWorld
             //double dy = p1.y - p2.y;
             //return Math.Sqrt(dx * dx + dy * dy);
             return SurMath.Azimuth(p1.X, p1.Y, p2.X, p2.Y).d;
+        }
+
+        public override void Drawing()
+        {
+            Console.WriteLine(this);
         }
     }
 }

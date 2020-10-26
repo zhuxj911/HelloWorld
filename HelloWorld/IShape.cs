@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Text;
 
-namespace HelloWorld
+namespace DrawShape
 {
     public interface IShape
     {
-        void Display();
+        double Area { get; }
+        double Length { get;}
     }
 }
