@@ -9,6 +9,36 @@ namespace HelloWorld
 
     class Program
     {
+        /// <summary>
+        /// 该函数为显示所有图形的函数，
+        /// 同样的Shape，但表现为各种不同子类的信息
+        /// 
+        /// 知识点： 数组类的参数用可枚举接口 IEnumerable<Shape> shapes
+        ///        不要直接用 静态数组     Shape[] shapes
+        ///               或 动态数组 List<Shape> shapes
+        /// 优化： 这个函数其实只做了一个功能：画图形 ，是从接口 IDrawing 继承来的
+        ///       根据面向接口编程原则，此处的参数更应该从：
+        ///  static void DisplayAllShapes(IEnumerable<Shape> shapes)
+        /// 更改为：
+        ///  static void DisplayAllShapes(IEnumerable<IDrawing> shapes)
+        /// </summary>
+        /// <param name="shapes"></param>
+        static void DrawAllShapes(IEnumerable<IDrawing> shapes)
+        {
+            //static void DrawAllShapes(IEnumerable<Shape> shapes)
+            //    foreach (IDrawing item in shapes)                 //此处体现了类的多态性
+            foreach (IDrawing item in shapes) //  此处采用接口的形式，体现了面向接口编程的原则
+            {
+                item.Drawing();
+
+                //由于所有的子类都从Shape继承，而Shape实现了IShape与IDrawing两个接口
+                //所以此处可以将IDrawing接口向IShape接口做接口跳转，从而调用IShape接口中的方法
+                //在ArcGIS Engine的开发中，常常采用这种方法，将一个大类的各种功能用接口的形式进行分类管理与应用
+                IShape shape = item as IShape;
+                Console.WriteLine($"这是IShape接口的方法：{shape.Length}");
+            }
+        }
+
         static void Main(string[] args)
         {
             #region 枚举与switch case
@@ -152,20 +182,22 @@ namespace HelloWorld
 
             shapes.Add(pg);
 
-            Polygon pg2 = new Polygon(); //面积28， 长度26.593867878528968
-            pg2.Add(new SPoint(-1, 0));
-            pg2.Add(new SPoint(2, 3));
-            pg2.Add(new SPoint(4, 2));
-
-            pts = new SPoint[] { new SPoint(4, 4), new SPoint(6, 8), new SPoint(-2, 5) };
-            pg2.AddRange(pts);
+            Polygon pg2 = new Polygon(); //面积28， 长度26.593867878528968           
+            pg2.AddRange(new SPoint[] {
+                new SPoint(-1, 0),
+                new SPoint(2, 3),
+                new SPoint(4, 2),
+                new SPoint(4, 4),
+                new SPoint(6, 8),
+                new SPoint(-2, 5)} );
 
             shapes.Add(pg2);
 
-            foreach (var item in shapes)
-            {
-                item.Drawing();
-            }
+            //foreach (var item in shapes)
+            //{
+            //    item.Drawing();
+            //}
+            DrawAllShapes(shapes);//此处用一个一般化的函数代替上面的循环
             #endregion
 
         }

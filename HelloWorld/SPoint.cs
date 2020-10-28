@@ -96,9 +96,9 @@ namespace DrawShape
         {
             //if(Name == null || Name == " ") //System.String -> string
             if ( string.IsNullOrWhiteSpace(Name) )
-                return $"{Id}, {x},{y},{z}";
+                return $"Point：{Id}, {x},{y},{z}";
             else
-                return $"{Id}, {Name},{x},{Y},{z}";
+                return $"Point：{Id}, {Name},{x},{Y},{z}";
         }
         #endregion
 

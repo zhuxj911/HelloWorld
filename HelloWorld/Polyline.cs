@@ -5,7 +5,8 @@ using System.Text;
 
 namespace DrawShape
 {
-    public class Polyline : Shape
+    //此处不希望该类受Polygon类不恰当的继承，所以声明为sealed，因此不能被继承
+    public sealed class Polyline : Shape 
     {
         private List<SPoint> points = new List<SPoint>();
   
@@ -14,6 +15,18 @@ namespace DrawShape
             this.length = this.area = 0;
         }
 
+        /// <summary>
+        /// Polyline的顶点个数
+        /// </summary>
+        public int Count => this.points.Count;
+
+        /// <summary>
+        /// 索引，新的C#知识点
+        /// 索引 pl[1] 是一个 get 属性
+        /// 公布Polyline的各个顶点
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
         public SPoint this[int index]
         {
             get
@@ -22,17 +35,12 @@ namespace DrawShape
                     throw new IndexOutOfRangeException("下标溢出！！！");
                 return this.points[index];
             }
-            //set
-            //{
-            //    if(index < 0 || index >= this.points.Count)
-            //        throw new IndexOutOfRangeException("下标溢出！！！");
-            //    this.points[index] = value;
-            //}
         }
 
-        private void CalculateLength()
+        private void Calculate()
         {
-            if (this.Count < 2) this.length = 0;
+            this.length = 0;
+            if (this.Count < 2) return;
 
             for (int k = 0; k < this.Count-1; k++)
             {
@@ -40,32 +48,16 @@ namespace DrawShape
             }
         }
 
-        public int Count { get => this.points.Count; }
-
         public void Add(SPoint pt)
         {
-            this.points.Add(pt);
-
-            if (this.points.Count < 2) return;
-
-            int n = this.points.Count - 1;
-            this.length += this.points[n].Distance(this.points[n - 1]);
-            this.area = 0;
+            this.points.Add(pt);            
+            Calculate();
         }
 
         public void AddRange(IEnumerable<SPoint> collection)
         {
-            SPoint last = this.points[this.points.Count - 1];
-
             this.points.AddRange(collection);
-            
-            foreach (var item in collection)
-            {
-                this.length += item.Distance(last);
-                last = item;
-            }
-            
-            this.area = 0;
+            Calculate();
         }
 
         public override void Drawing()
@@ -74,8 +66,23 @@ namespace DrawShape
         }
 
         public override string ToString()
-        {        
-            return $"多段线Polyline：面积{Area}， 长度{this.Length}";
+        {
+            //string buffer = "Polyline:\n";
+            //for (int i = 0; i < this.Count; i++)
+            //{
+            //    buffer += $"  {i + 1}, ({this[i].X}, {this[i].Y})\n";
+            //}
+            //buffer += $"长度={this.length}";
+            //return buffer;
+
+            //以上代码 String 类频繁的进行字符串的连接操作，有性能问题，下边改用StringBuilder类
+            StringBuilder buffer = new StringBuilder("Polyline:\n");
+            for (int i = 0; i < this.Count; i++)
+            {
+                buffer.Append($"  {i + 1}, ({this[i].X}, {this[i].Y})\n");
+            }
+            buffer.Append($"长度={this.length}");
+            return buffer.ToString();
         }
     }
 }

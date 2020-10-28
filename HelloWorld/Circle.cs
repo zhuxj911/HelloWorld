@@ -8,7 +8,7 @@ namespace DrawShape
     {       
         private double r; 
 
-        private SPoint center;
+        //private SPoint center;
 
         public double R
         {
@@ -31,7 +31,7 @@ namespace DrawShape
 
         public override string ToString()
         {        
-            return $"圆的半径{R}，面积{Area}， 周长{this.Length}";
+            return $"Circle:\n半径={R}，面积={Area}， 周长={this.Length}";
         }
 
         public override void Drawing()
