@@ -8,6 +8,21 @@
         Title="坐标方位角计算" Height="200" 
         Width="480"
         WindowStartupLocation="CenterOwner">
+    <Window.Resources>
+        <Style TargetType="TextBox">
+            <Setter Property="HorizontalContentAlignment"
+                    Value="Left" />
+            <Setter Property="VerticalContentAlignment"
+                    Value="Center" />
+            <Setter Property="Background" Value="AliceBlue" />
+        </Style>
+        <Style TargetType="Label">
+            <Setter Property="HorizontalContentAlignment"
+                    Value="Right" />
+            <Setter Property="VerticalContentAlignment"
+                    Value="Center" />
+        </Style>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="50*"/>
