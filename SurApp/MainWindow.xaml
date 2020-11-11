@@ -5,43 +5,31 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SurApp"
         mc:Ignorable="d"
-        Title="坐标方位角计算" Height="180" Width="480">
+        Title="测量螺丝刀" Height="250" Width="300"        
+        WindowState="Maximized">
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="60*"/>
-            <RowDefinition Height="60*"/>
-            <RowDefinition Height="60*"/>
-        </Grid.RowDefinitions>
-        <GroupBox Header="起点坐标" >
-            <StackPanel Orientation="Horizontal" Background="AliceBlue">
-                <Label Content="点名" />
-                <TextBox Name="textBox_AName"  Text="A" Width="120"/>
-                <Label Content="X=" />
-                <TextBox Name="textBox_xA" Text="50342.464" Width="120"/>
-                <Label Content="Y=" />
-                <TextBox Name="textBox_yA" Text="3423.232" Width="120"/>
-            </StackPanel>
-        </GroupBox>
+        <DockPanel LastChildFill="True">
+            <Menu DockPanel.Dock="Top">
+                <MenuItem Header="文件(F)">
+                    <MenuItem Header="新建..." />
+                    <MenuItem Header="读入文本数据..." />
+                    <Separator/>
+                    <MenuItem Header="退出" />
+                </MenuItem>
 
-        <GroupBox Header="方向点坐标" Grid.Row="1">
-            <StackPanel Orientation="Horizontal" Background="AliceBlue">
-                <Label Content="点名" />
-                <TextBox Name="textBox_BName" Text="B" Width="120"/>
-                <Label Content="X=" />
-                <TextBox Name="textBox_xB" Text="50289.874" Width="120"/>
-                <Label Content="Y=" />
-                <TextBox Name="textBox_yB" Text="3528.978" Width="120"/>
-            </StackPanel>
-        </GroupBox>
+                <MenuItem Header="测量(G)">
+                    <MenuItem Header="坐标方位角计算"  Click="Button_Click"/>
+                </MenuItem>
 
-        <GroupBox Header="计算结果" Grid.Row="2">
-            <StackPanel Orientation="Horizontal" Background="AliceBlue"> 
-                <Label Name="label_az" Content="坐标方位角" />
-                <TextBox Name="textBox_a" Text="" Width="120"/>
-                <Label Content="距离" />
-                <TextBox Name="textBox_d" Text="" Width="120"/>
-                <Button Content="计算" Width="60" Margin="5" Click="Button_Click"/>
-            </StackPanel>
-        </GroupBox>
+                <MenuItem Header="帮助(H)">
+                    <MenuItem Header="关于..." />
+                </MenuItem>
+            </Menu>
+            <ToolBar DockPanel.Dock="Top"/>
+            <StatusBar DockPanel.Dock="Bottom" Background="Blue"/>
+            <Grid Background="SpringGreen"/>
+        </DockPanel>
+
+
     </Grid>
 </Window>
