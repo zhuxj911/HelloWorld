@@ -7,18 +7,17 @@ namespace SurApp
     /// </summary>
     public partial class AzimuthWindow : Window
     {
-        private AzimuthWindowVM azimuthUI = new AzimuthWindowVM();
+        private AzimuthWindowVM azimuthVM = new AzimuthWindowVM();
 
         public AzimuthWindow()
         {
             InitializeComponent();
-
-            this.DataContext = azimuthUI;
+            this.DataContext = azimuthVM;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            azimuthUI.CalculateAzimuth();
+            azimuthVM.CalculateAzimuth();
         }
     }
 }
