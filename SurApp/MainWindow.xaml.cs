@@ -1,31 +1,39 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Microsoft.Win32;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace SurApp
 {
-    /// <summary>
-    /// MainWindow.xaml 的交互逻辑
-    /// </summary>
-    public partial class MainWindow : Window
+  /// <summary>
+  /// MainWindow.xaml 的交互逻辑
+  /// </summary>
+  public partial class MainWindow : Window
+  {
+    private ProjWindowVM vm = new ProjWindowVM();
+    public MainWindow()
     {
-        public MainWindow()
-        {
-            InitializeComponent();
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            AzimuthWindow win = new AzimuthWindow();
-            win.Show();
-        }
+      InitializeComponent();
+      this.DataContext = vm;
     }
+
+    private void Button_Click(object sender, RoutedEventArgs e)
+    {
+      AzimuthWindow win = new AzimuthWindow();
+      win.Show();
+    }
+
+    private void MenuItem_Open_Click(object sender, RoutedEventArgs e)
+    {
+      vm.Open();
+    }
+
+    private void MenuItem_Save_Click(object sender, RoutedEventArgs e)
+    {
+      vm.Save();
+    }
+
+    private void MenuItem_SaveAs_Click(object sender, RoutedEventArgs e)
+    {
+      vm.SaveAs();
+    }
+  }
 }
