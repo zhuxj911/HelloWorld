@@ -15,7 +15,7 @@ namespace SurApp
       this.DataContext = vm;
     }
 
-    private void Button_Click(object sender, RoutedEventArgs e)
+    private void MenuItem_Click(object sender, RoutedEventArgs e)
     {
       AzimuthWindow win = new AzimuthWindow();
       win.Show();
@@ -34,6 +34,31 @@ namespace SurApp
     private void MenuItem_SaveAs_Click(object sender, RoutedEventArgs e)
     {
       vm.SaveAs();
+    }
+
+    private void MenuItem_BLtoXY_Click(object sender, RoutedEventArgs e)
+    {
+      vm.BLtoXY();
+    }
+
+    private void MenuItem_XYtoBL_Click(object sender, RoutedEventArgs e)
+    {
+      vm.XYtoBL();
+    }
+
+    private void MenuItem_ClearBL_Click(object sender, RoutedEventArgs e)
+    {
+      vm.ClearBL();
+    }
+
+    private void MenuItem_ClearXY_Click(object sender, RoutedEventArgs e)
+    {
+      vm.ClearXY();
+    }
+
+    private void MenuItem_New_Click(object sender, RoutedEventArgs e)
+    {
+      vm.New();
     }
   }
 }

@@ -9,7 +9,7 @@ namespace SurApp
 {
   public class ProjWindowVM : NotificationObject
   {
-    private string fileName="New Document";
+    private string fileName="untitle";
     public string FileName 
     {
       get => fileName;
@@ -17,7 +17,13 @@ namespace SurApp
       {
         fileName = value;
         RaisePropertyChanged("FileName");
+        RaisePropertyChanged("Title");
       }
+    }
+
+    public string Title
+    {
+      get => $"测量螺丝刀(Ver2020)-{FileName}";
     }
 
     private List<Ellipsoid> ellipsoidList = EllipsoidFactory.EllipsoidList;
@@ -64,14 +70,14 @@ namespace SurApp
       }
     }
 
-    private double _NY;
-    public double NY
+    private int _NY;
+    public int NY
     {
       get => _NY;
       set
       {
         _NY = value;
-        RaisePropertyChanged("_NY");
+        RaisePropertyChanged("NY");
       }
     }
 
@@ -92,6 +98,7 @@ namespace SurApp
       using (StreamReader sr = new StreamReader(FileName))
       {
         string[] items = null;
+        SPointList.Clear();
         while (true)
         {
           string buffer = sr.ReadLine();
@@ -164,12 +171,52 @@ namespace SurApp
       }
     }
 
+    private void WriteFile()
+    {
+      using (StreamWriter sw = new StreamWriter(FileName))
+      {
+        sw.WriteLine("#数据文件中的 # : , 均应为英文字符");
+        sw.WriteLine("#以#开头的行视为注释行");
+        sw.WriteLine("#可以忽略0个空格的行");
+        sw.WriteLine("#可以忽略有多个空格的行");
+        sw.WriteLine();
+
+        sw.WriteLine("#CS 指定坐标系 BJ54 XA80 CGCS2000 WGS84 CS00");
+        sw.WriteLine("#CS: BJ54");
+        sw.WriteLine("#CS: XA80");
+        sw.WriteLine("#CS: WGS84");
+        sw.WriteLine("#CS: CGCS2000");
+        sw.WriteLine("#CS: CS00, 6378137, 298.257222101");
+        if (CurrentEllipsoid.Id == "CS00")
+        {
+          sw.WriteLine($"CS: {CurrentEllipsoid.Id}, {CurrentEllipsoid.a}, {CurrentEllipsoid.f}");
+        }
+        else
+        {
+          sw.WriteLine($"CS: {CurrentEllipsoid.Id}");
+        }
+        sw.WriteLine();
+
+        sw.WriteLine($"L0: {dmsL0}");
+        sw.WriteLine($"YKM: {YKM}");
+        sw.WriteLine($"N: {NY}");
+
+        sw.WriteLine();
+        sw.WriteLine("#点名, X, Y, B, L");
+        foreach (var pnt in SPointList)
+        {
+          sw.WriteLine(pnt);
+        }
+        sw.Close();
+      }
+    }
+
     public void Save()
     {
-      //OpenFileDialog dlg = new OpenFileDialog();
-      //dlg.DefaultExt = ".txt";
-      //dlg.Filter = "高斯投影数据文件|*.txt|All File(*.*)|*.*";
-      //if (dlg.ShowDialog() != true) return;
+      if (FileName == "untitle")
+        SaveAs();
+      else
+        WriteFile();
     }
 
     public void SaveAs()
@@ -178,6 +225,62 @@ namespace SurApp
       dlg.DefaultExt = ".txt";
       dlg.Filter = "高斯投影数据文件|*.txt|All File(*.*)|*.*";
       if (dlg.ShowDialog() != true) return;
+      FileName = dlg.FileName;
+
+      WriteFile();      
+    }
+
+    public void BLtoXY()
+    {
+      IProj proj = new GaussProj(CurrentEllipsoid);
+      double L0 = ZXY.SurMath.DMStoRad(this.dmsL0);
+      foreach (var pnt in SPointList)
+      {
+        double B = ZXY.SurMath.DMStoRad(pnt.dmsB);
+        double L = ZXY.SurMath.DMStoRad(pnt.dmsL);
+        var xy = proj.BLtoXY(B, L, L0, YKM, NY);
+        pnt.X = xy.x;
+        pnt.Y = xy.y;
+      }
+    }
+
+    public void XYtoBL()
+    {
+      IProj proj = new GaussProj(CurrentEllipsoid);
+      double L0 = ZXY.SurMath.DMStoRad(this.dmsL0);
+      foreach (var pnt in SPointList)
+      {
+        var BL = proj.XYtoBL(pnt.X, pnt.Y, L0, YKM, NY);
+        pnt.dmsB = ZXY.SurMath.RadtoDMS(BL.B);
+        pnt.dmsL = ZXY.SurMath.RadtoDMS(BL.L);        
+      }
+    }
+
+    public void ClearXY()
+    {      
+      foreach (var pnt in SPointList)
+      {       
+        pnt.X = 0;
+        pnt.Y = 0;
+      }
+    }
+
+    public void ClearBL()
+    {
+      foreach (var pnt in SPointList)
+      {
+        pnt.dmsB = 0;
+        pnt.dmsL = 0;
+      }
+    }
+
+    public void New()
+    {
+      CurrentEllipsoid = Ellipsoids["CGCS2000"];
+      dmsL0 = 0;
+      YKM = 0;
+      NY = 0;
+      SPointList.Clear();
     }
   }
 }

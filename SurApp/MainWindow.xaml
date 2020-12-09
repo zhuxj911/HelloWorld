@@ -5,13 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SurApp"
         mc:Ignorable="d"
-        Title="测量螺丝刀" Height="700" Width="1000"        
+        Title="{Binding Title}" Height="700" Width="1000"        
         WindowState="Maximized">
     <Grid>
         <DockPanel LastChildFill="True">
             <Menu DockPanel.Dock="Top">
                 <MenuItem Header="文件(F)">
-                    <MenuItem Header="新建..." />
+          <MenuItem Header="新建..." Click="MenuItem_New_Click"/>
                     <MenuItem Header="打开..." Click="MenuItem_Open_Click"/>
           <MenuItem Header="保存" Click="MenuItem_Save_Click"/>
           <MenuItem Header="另存为..." Click="MenuItem_SaveAs_Click"/>
@@ -19,9 +19,15 @@
                     <MenuItem Header="退出" />
                 </MenuItem>
 
-                <MenuItem Header="测量(G)">
-                    <MenuItem Header="坐标方位角计算"  Click="Button_Click"/>
-                </MenuItem>
+        <MenuItem Header="测量(G)">
+          <MenuItem Header="高斯投影正算"  Click="MenuItem_BLtoXY_Click"/>
+          <MenuItem Header="高斯投影反算"  Click="MenuItem_XYtoBL_Click"/>
+          <Separator/>
+          <MenuItem Header="清除BL"  Click="MenuItem_ClearBL_Click"/>
+          <MenuItem Header="清除XY"  Click="MenuItem_ClearXY_Click"/>
+          <Separator/>
+          <MenuItem Header="坐标方位角计算"  Click="MenuItem_Click"/>
+        </MenuItem>
 
                 <MenuItem Header="帮助(H)">
                     <MenuItem Header="关于..." />
