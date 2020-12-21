@@ -14,13 +14,13 @@ namespace ZXY
             gaussProj = new GaussProj(ellipsoid);
         }
 
-        public (double x, double y) BLtoXY(double B, double L, double L0, double ykm, int Ny)
+        public (double X, double Y, double gamma, double m) BLtoXY(double B, double L, double L0, double YKM, int Zone)
         {
-            var xy = gaussProj.BLtoXY(B, L, L0, ykm, Ny);
-            return (k* xy.x, k*xy.y);
+            var xy = gaussProj.BLtoXY(B, L, L0, YKM, Zone);
+            return (k* xy.X, k*xy.Y, xy.gamma, xy.m);
         }
 
-        public (double B, double L) XYtoBL(double x, double y, double L0, double ykm, int Ny)
+        public (double B, double L, double gamma, double m) XYtoBL(double X, double Y, double L0, double YKM, int Zone)
         {
             throw new NotImplementedException();
         }

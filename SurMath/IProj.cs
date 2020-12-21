@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ZXY
+﻿namespace ZXY
 {
-    public interface IProj
+  public interface IProj
     {
-        (double x, double y) BLtoXY(double B, double L, double L0, double ykm, int Ny);
+        (double X, double Y, double gamma, double m) BLtoXY(double B, double L, double L0, double YKM, int Zone);
 
-        (double B, double L) XYtoBL(double x, double y, double L0, double ykm, int Ny);
+        (double B, double L, double gamma, double m) XYtoBL(double X, double Y, double L0, double YKM, int Zone);
     }
 }

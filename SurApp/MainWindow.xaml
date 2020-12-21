@@ -109,10 +109,10 @@
                 <DataGridTextColumn Header="Y(E)" 
                         Binding="{Binding Y, StringFormat={}{0:0.####}}"
                         MinWidth="100" />
-                <DataGridTextColumn Header="γ" 
+                <DataGridTextColumn Header="子午线收敛角(γ)" 
                         Binding="{Binding GammaDMSString, Mode=OneWay}"
                         MinWidth="100" />
-                <DataGridTextColumn Header="m" 
+                <DataGridTextColumn Header="长度比(m)" 
                         Binding="{Binding m}"
                         MinWidth="100" />
               </DataGrid.Columns>

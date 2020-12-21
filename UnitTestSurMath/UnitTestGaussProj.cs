@@ -20,8 +20,8 @@ namespace UnitTestSurMath
                 IProj proj = new GaussProj(ellipsoid);
                 var xy = proj.BLtoXY(B, L, L0, 0, 0);
 
-                Assert.AreEqual(2433586.692, xy.x, 0.001);
-                Assert.AreEqual(250547.403, xy.y, 0.001);
+                Assert.AreEqual(2433586.692, xy.X, 0.001);
+                Assert.AreEqual(250547.403, xy.Y, 0.001);
             }
 
             //数据来自《大地测量学基础》2版P193
@@ -34,8 +34,8 @@ namespace UnitTestSurMath
                 IProj proj = new GaussProj(ellipsoid);
                 var xy = proj.BLtoXY(B, L, L0, 0, 0);               
 
-                Assert.AreEqual(1944359.6070, xy.x, 0.003);
-                Assert.AreEqual(240455.4563, xy.y, 0.001);
+                Assert.AreEqual(1944359.6070, xy.X, 0.003);
+                Assert.AreEqual(240455.4563, xy.Y, 0.001);
             }
 
             //数据来自《大地测量学基础》2版P193
@@ -48,8 +48,8 @@ namespace UnitTestSurMath
                 IProj proj = new GaussProj(ellipsoid);
                 var xy = proj.BLtoXY(B, L, L0, 0, 0);
 
-                Assert.AreEqual(1944325.8030, xy.x, 0.001);
-                Assert.AreEqual(240451.5085, xy.y, 0.001);
+                Assert.AreEqual(1944325.8030, xy.X, 0.001);
+                Assert.AreEqual(240451.5085, xy.Y, 0.001);
             }
 
         }

@@ -254,8 +254,10 @@ namespace SurApp
         double B = ZXY.SurMath.DMStoRad(pnt.dmsB);
         double L = ZXY.SurMath.DMStoRad(pnt.dmsL);
         var xy = proj.BLtoXY(B, L, L0, YKM, NY);
-        pnt.X = xy.x;
-        pnt.Y = xy.y;
+        pnt.X = xy.X;
+        pnt.Y = xy.Y;
+        pnt.Gamma = xy.gamma;
+        pnt.m = xy.m;
       }
     }
 
@@ -268,6 +270,8 @@ namespace SurApp
         var BL = proj.XYtoBL(pnt.X, pnt.Y, L0, YKM, NY);
         pnt.dmsB = ZXY.SurMath.RadtoDMS(BL.B);
         pnt.dmsL = ZXY.SurMath.RadtoDMS(BL.L);
+        pnt.Gamma = BL.gamma;
+        pnt.m = BL.m;
       }
     }
 
@@ -277,6 +281,8 @@ namespace SurApp
       {
         pnt.X = 0;
         pnt.Y = 0;
+        pnt.Gamma = 0;
+        pnt.m = 0;
       }
     }
 
@@ -286,6 +292,8 @@ namespace SurApp
       {
         pnt.dmsB = 0;
         pnt.dmsL = 0;
+        pnt.Gamma = 0;
+        pnt.m = 0;
       }
     }
 

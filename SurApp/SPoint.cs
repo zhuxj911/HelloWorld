@@ -112,5 +112,34 @@ namespace ZXY.Drawing
         RaisePropertyChanged("dmsL");
       }
     }
+
+    private double _Gamma;
+    public double Gamma
+    {
+      get => _Gamma;
+      set
+      {
+        _Gamma = value;
+        RaisePropertyChanged("Gamma");
+        RaisePropertyChanged("GammaDMSString");
+      }
+    }
+
+    public string GammaDMSString
+    {
+      get => ZXY.SurMath.RadtoString(Gamma);
+    }
+
+
+    private double _m;
+    public double m
+    {
+      get => _m;
+      set
+      {
+        _m = value;
+        RaisePropertyChanged("m");
+      }
+    }
   }
 }
