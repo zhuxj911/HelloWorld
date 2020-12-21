@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Windows.Media;
 using ZXY;
 using ZXY.Drawing;
 
@@ -9,8 +10,22 @@ namespace SurApp
 {
   public class ProjWindowVM : NotificationObject
   {
-    private string fileName="untitle";
-    public string FileName 
+    private DrawingCanvas drawingCanvas;
+
+    public ProjWindowVM(DrawingCanvas drawingCanvas)
+    {
+      this.drawingCanvas = drawingCanvas;
+      this.SPointList.CollectionChanged += SPointList_CollectionChanged;
+    }
+
+    private void SPointList_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+    {
+      drawingCanvas.InvalidateVisual();
+      //this.drawingCanvas.OnDraw(SPointList);
+    }
+
+    private string fileName = "untitle";
+    public string FileName
     {
       get => fileName;
       set
@@ -109,7 +124,7 @@ namespace SurApp
 
           if (buffer[0] == '#') continue;
 
-          if(buffer.Contains(':'))
+          if (buffer.Contains(':'))
           {
             items = buffer.Split(new char[] { ':' });
             string cap = items[0].Trim();
@@ -118,8 +133,8 @@ namespace SurApp
               case "CS":
                 {
                   string item2 = items[1].Trim();
-                  if (item2 == "BJ54")                   
-                   CurrentEllipsoid = Ellipsoids["BJ54"];
+                  if (item2 == "BJ54")
+                    CurrentEllipsoid = Ellipsoids["BJ54"];
                   else if (item2 == "XA80")
                     CurrentEllipsoid = Ellipsoids["XA80"];
                   else if (item2 == "WGS84")
@@ -227,7 +242,7 @@ namespace SurApp
       if (dlg.ShowDialog() != true) return;
       FileName = dlg.FileName;
 
-      WriteFile();      
+      WriteFile();
     }
 
     public void BLtoXY()
@@ -252,14 +267,14 @@ namespace SurApp
       {
         var BL = proj.XYtoBL(pnt.X, pnt.Y, L0, YKM, NY);
         pnt.dmsB = ZXY.SurMath.RadtoDMS(BL.B);
-        pnt.dmsL = ZXY.SurMath.RadtoDMS(BL.L);        
+        pnt.dmsL = ZXY.SurMath.RadtoDMS(BL.L);
       }
     }
 
     public void ClearXY()
-    {      
+    {
       foreach (var pnt in SPointList)
-      {       
+      {
         pnt.X = 0;
         pnt.Y = 0;
       }
@@ -280,7 +295,7 @@ namespace SurApp
       dmsL0 = 0;
       YKM = 0;
       NY = 0;
-      SPointList.Clear();
+      SPointList.Clear();     
     }
   }
 }

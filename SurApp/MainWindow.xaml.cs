@@ -8,12 +8,14 @@ namespace SurApp
   /// </summary>
   public partial class MainWindow : Window
   {
-    private ProjWindowVM vm = new ProjWindowVM();
+    private ProjWindowVM vm;
     public MainWindow()
     {
       InitializeComponent();
+      vm = new ProjWindowVM(this.figureCanvas);
       this.DataContext = vm;
-    }
+      this.figureCanvas.Tag = vm.SPointList;
+    } 
 
     private void MenuItem_Click(object sender, RoutedEventArgs e)
     {
