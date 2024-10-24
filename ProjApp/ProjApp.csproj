@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows7.0</TargetFramework>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ProjApp.Library\ProjApp.Library.csproj" />
+    <ProjectReference Include="..\SurApp.Math\SurApp.Math.csproj" />
+    <ProjectReference Include="..\SurApp.WpfLibrary\SurApp.WpfLibrary.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,6 +1,13 @@
 # HelloWorld
 HelloWorld of C# Demo Application
 
+教学示例程序
+
+## 日志
+2024.10.23 加入线路计算程序SmartRoute，重构了整个解决方案对架构，将原SurApp更名为ProjApp。
+2024.10.24 将整个解决方案名称改为SurApp
+
+
 ## git branch
 
 ###  查看当前有哪些分支

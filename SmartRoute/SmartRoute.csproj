@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SmartRoute.Library\SmartRoute.Library.csproj" />
+    <ProjectReference Include="..\SurApp.Math\SurApp.Math.csproj" />
+    <ProjectReference Include="..\SurApp.WpfLibrary\SurApp.WpfLibrary.csproj" />
+  </ItemGroup>
+
+</Project>

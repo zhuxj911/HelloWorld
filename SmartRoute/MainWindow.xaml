@@ -1,0 +1,36 @@
+﻿<Window
+    x:Class="SmartRoute.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:SmartRoute"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="线路要素与线路点坐标计算" Height="700" Width="800">
+
+    <Grid>
+        <DockPanel LastChildFill="True">
+            <Menu  x:Name="mainmenu" DockPanel.Dock="Top" Background="AliceBlue">
+                <MenuItem Header="文件(F)">
+                    <MenuItem Header="打开" />
+                    <MenuItem Header="保存" />
+                    <Separator />
+                    <MenuItem Header="退出" />
+                </MenuItem>
+                <MenuItem Header="曲线计算">
+                    <MenuItem Header="初始化路线参数" />
+                    <MenuItem Header="单点坐标计算" />
+                    <Separator />
+                    <MenuItem Header="批量坐标计算" />
+                </MenuItem>
+
+                <MenuItem Header="成果输出">
+                    <MenuItem Header="写出计算成果" />
+                </MenuItem>
+            </Menu>
+
+            <Grid>
+                <Frame x:Name="routeNavigationFrame" NavigationUIVisibility="Hidden" Source="CurvePage.xaml" />
+            </Grid>
+        </DockPanel>
+    </Grid>
+</Window>

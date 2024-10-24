@@ -1,0 +1,300 @@
+﻿<Page
+    x:Class="SmartRoute.CurvePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ViewModels="clr-namespace:SmartRoute.ViewModels"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:SmartRoute"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="圆曲线与缓和曲线要素计算"
+    d:DesignHeight="450"
+    d:DesignWidth="600"
+    mc:Ignorable="d">
+
+    <Page.DataContext>
+        <ViewModels:CurveViewModel />
+    </Page.DataContext>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="150*" />
+            <ColumnDefinition Width="150*" />
+            <ColumnDefinition Width="150*" />
+            <ColumnDefinition Width="150*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20" />
+            <RowDefinition Height="40" />
+            <RowDefinition Height="40" />
+            <RowDefinition Height="40" />
+            <RowDefinition Height="80" />
+            <RowDefinition Height="60" />
+            <RowDefinition Height="100*" />
+            <RowDefinition Height="200*" />
+            <RowDefinition Height="20" />
+        </Grid.RowDefinitions>
+        <TextBlock HorizontalAlignment="Center" Text="已知数据：" />
+        <RadioButton
+            Grid.Column="1"
+            Content="交点-起点-偏转角"
+            GroupName="dataInputMethod" />
+        <RadioButton
+            Grid.Column="2"
+            Content="交点-起点-终点"
+            GroupName="dataInputMethod" />
+
+        <RadioButton
+            Grid.Column="3"
+            Content="直线"
+            GroupName="dataInputMethod" />
+        <GroupBox
+            Grid.Row="1"
+            Grid.ColumnSpan="4"
+            Header="曲线交点(JD)">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="60*" />
+                    <ColumnDefinition Width="120" />
+                    <ColumnDefinition Width="60*" />
+                    <ColumnDefinition Width="120*" />
+                    <ColumnDefinition Width="60*" />
+                    <ColumnDefinition Width="120*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock
+                    Grid.Column="0"
+                    Text="公里桩号"
+                    TextAlignment="Right" />
+                <TextBox Grid.Column="1" Text="{Binding JD.KNo}" />
+                <TextBlock
+                    Grid.Column="2"
+                    Text="X="
+                    TextAlignment="Right" />
+                <TextBox Grid.Column="3" Text="{Binding JD.X}" />
+                <TextBlock
+                    Grid.Column="4"
+                    Text="Y="
+                    TextAlignment="Right" />
+                <TextBox Grid.Column="5" Text="{Binding JD.Y}" />
+            </Grid>
+        </GroupBox>
+
+        <GroupBox
+            Grid.Row="2"
+            Grid.ColumnSpan="4"
+            Header="曲线起点">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="60*" />
+                    <ColumnDefinition Width="200*" />
+                    <ColumnDefinition Width="60*" />
+                    <ColumnDefinition Width="200*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock
+                    Grid.Column="0"
+                    Text="X="
+                    TextAlignment="Right" />
+                <TextBox Grid.Column="1" Text="{Binding Start.X}" />
+                <TextBlock
+                    Grid.Column="2"
+                    Text="Y="
+                    TextAlignment="Right" />
+                <TextBox Grid.Column="3" Text="{Binding Start.Y}" />
+            </Grid>
+        </GroupBox>
+
+        <GroupBox
+            Grid.Row="3"
+            Grid.ColumnSpan="4"
+            Header="曲线终点">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="60*" />
+                    <ColumnDefinition Width="200*" />
+                    <ColumnDefinition Width="60*" />
+                    <ColumnDefinition Width="200*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock
+                    Grid.Column="0"
+                    Text="X="
+                    TextAlignment="Right" />
+                <TextBox Grid.Column="1" Text="{Binding End.X}" />
+                <TextBlock
+                    Grid.Column="2"
+                    Text="Y="
+                    TextAlignment="Right" />
+                <TextBox Grid.Column="3" Text="{Binding End.Y}" />
+            </Grid>
+        </GroupBox>
+        <GroupBox
+            Grid.Row="4"
+            Grid.ColumnSpan="4"
+            Header="计算">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30*" />
+                    <RowDefinition Height="30*" />
+                    <RowDefinition Height="30*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="120*" />
+                    <ColumnDefinition Width="200*" />
+                    <ColumnDefinition Width="100*" />
+                    <ColumnDefinition Width="200*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Text="偏转角(α)"
+                    TextAlignment="Right" />
+                <TextBox
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Text="{Binding Alpha}" />
+                <Button
+                    Grid.Row="0"
+                    Grid.Column="2"
+                    Command="{Binding CalculateAlphaCommand}"
+                    Content="计算偏转角"
+                    IsEnabled="{Binding IsDirAngle}" />
+
+                <TextBlock
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Text="圆曲率半径(R)"
+                    TextAlignment="Right" />
+                <TextBox
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Text="{Binding Radius}" />
+
+                <TextBlock
+                    Grid.Row="2"
+                    Grid.Column="0"
+                    Text="缓和曲线长度(l0)"
+                    TextAlignment="Right" />
+                <TextBox
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    Text="{Binding L0}" />
+                <TextBlock
+                    Grid.Row="2"
+                    Grid.Column="2"
+                    Grid.ColumnSpan="2"
+                    Text="圆曲线：l0 ≤ 0, 缓和曲线:l0 &gt; 0"
+                    TextAlignment="Left" />
+            </Grid>
+        </GroupBox>
+
+        <GroupBox
+            Grid.Row="5"
+            Grid.ColumnSpan="4"
+            Header="曲线要素与曲线上点坐标计算">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30*" />
+                    <RowDefinition Height="30*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100*" />
+                    <ColumnDefinition Width="60*" />
+                    <ColumnDefinition Width="200*" />
+                    <ColumnDefinition Width="140*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Text="任意曲线点"
+                    TextAlignment="Right" />
+                <TextBlock
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Text="点桩号"
+                    TextAlignment="Right" />
+                <TextBox
+                    Grid.Row="0"
+                    Grid.Column="2"
+                    Text="{Binding AnyKNo}" />
+                <Button
+                    Grid.Row="0"
+                    Grid.Column="3"
+                    Command="{Binding CalculatePointOnCurveByKnoCommand}"
+                    Content="单个曲线点坐标计算" />
+
+                <TextBlock
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Text="批量曲线点"
+                    TextAlignment="Right" />
+                <TextBlock
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Text="里程间距"
+                    TextAlignment="Right" />
+                <TextBox
+                    Grid.Row="1"
+                    Grid.Column="2"
+                    Text="{Binding Length}" />
+                <Button
+                    Grid.Row="1"
+                    Grid.Column="3"
+                    Command="{Binding CalculateBatchPointsOnCurveCommand}"
+                    Content="批量曲线点坐标计算" />
+            </Grid>
+        </GroupBox>
+        <TextBlock
+            Grid.Row="6"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            Background="AliceBlue"
+            Text="{Binding CurveyKeyFeature}" />
+        <DataGrid
+            Grid.Row="6"
+            Grid.Column="2"
+            Grid.ColumnSpan="2"
+            Margin="2"
+            AutoGenerateColumns="False"
+            ItemsSource="{Binding Points}">
+            <DataGrid.Columns>
+                <DataGridTextColumn
+                    MinWidth="40"
+                    Binding="{Binding KNoInfo}"
+                    Header="里程桩号" />
+                <DataGridTextColumn
+                    MinWidth="100"
+                    Binding="{Binding X, StringFormat={}{0:0.####}}"
+                    Header="X" />
+                <DataGridTextColumn
+                    MinWidth="100"
+                    Binding="{Binding Y, StringFormat={}{0:0.####}}"
+                    Header="Y" />
+                <DataGridTextColumn
+                    MinWidth="100"
+                    Binding="{Binding Note}"
+                    Header="备注" />
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Canvas
+            Grid.Row="7"
+            Grid.ColumnSpan="4"
+            Background="AntiqueWhite" />
+        <Button
+            Grid.Row="8"
+            Grid.Column="0"
+            Command="{Binding SetCurveTestDataCommand}"
+            CommandParameter="0"
+            Content="圆曲线测试1" />
+        <Button
+            Grid.Row="8"
+            Grid.Column="1"
+            Command="{Binding SetCurveTestDataCommand}"
+            CommandParameter="1"
+            Content="圆曲线测试2" />
+        <Button
+            Grid.Row="8"
+            Grid.Column="2"
+            Command="{Binding SetCurveTestDataCommand}"
+            CommandParameter="2"
+            Content="缓和曲线测试1" />
+    </Grid>
+</Page>
