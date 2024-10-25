@@ -1,28 +1,42 @@
 ﻿using Microsoft.Win32;
 using ProjApp.Library;
+using SmartRoute.util;
+using SurWpfLib;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
-using System.Windows.Media;
+using System.Reflection.Metadata;
+using System.Windows.Input;
 using ZXY;
 
 namespace ProjApp
 {
     public class ProjWindowVM : NotificationObject
     {
-        private DrawingCanvas drawingCanvas;
+        public ICommand NewFileCommand {  get; set; }
+        public ICommand OpenFileCommand { get; set; }
+        public ICommand SaveFileCommand { get; set; }
+        public ICommand SaveAsFileCommand { get; set; }
+        public ICommand ClearBLCommand { get; set; }
+        public ICommand ClearXYCommand { get; set; }
 
-        public ProjWindowVM(DrawingCanvas drawingCanvas)
-        {
-            this.drawingCanvas = drawingCanvas;
-            this.SPointList.CollectionChanged += SPointList_CollectionChanged;
-        }
+        public ICommand BLtoXYCommand { get; set; }
+        public ICommand XYtoBLCommand { get; set; }
+        public ICommand ShowAzimuthWindowCommand { get; set; }
 
-        private void SPointList_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        public ProjWindowVM()
         {
-            drawingCanvas.InvalidateVisual();
-            //this.drawingCanvas.OnDraw(SPointList);
-        }
+            NewFileCommand = new RelayCommand( (paramters) => NewFile(), (paramters) => true);
+            OpenFileCommand = new RelayCommand((paramters) => OpenFile(), (paramters) => true);
+            SaveFileCommand = new RelayCommand((paramters) => SaveFile(), (paramters) => true);
+            SaveAsFileCommand = new RelayCommand((paramters) => SaveAsFile(), (paramters) => true);
+            ClearBLCommand = new RelayCommand((paramters) => ClearBL(), (paramters) => true);
+            ClearXYCommand = new RelayCommand((paramters) => ClearXY(), (paramters) => true);
+            BLtoXYCommand = new RelayCommand((paramters) => BLtoXY(), (paramters) => true);
+            XYtoBLCommand = new RelayCommand((paramters) => XYtoBL(), (paramters) => true);
+            ShowAzimuthWindowCommand = new RelayCommand((paramters) => ShowAzimuthWindow(), (paramters) => true);
+        }    
+        
 
         private string fileName = "untitle";
 
@@ -39,7 +53,7 @@ namespace ProjApp
 
         public string Title
         {
-            get => $"测量螺丝刀(Ver2020)-{FileName}";
+            get => $"测量螺丝刀(Ver2024.10)-{FileName}";
         }
 
         private List<Ellipsoid> ellipsoidList = EllipsoidFactory.EllipsoidList;
@@ -102,14 +116,14 @@ namespace ProjApp
             }
         }
 
-        private ObservableCollection<GPoint> sPointList = new ObservableCollection<GPoint>();
+        private ObservableCollection<GPoint> pointList = new ObservableCollection<GPoint>();
 
-        public ObservableCollection<GPoint> SPointList
+        public ObservableCollection<GPoint> PointList
         {
-            get => sPointList;
+            get => pointList;
         }
 
-        public void Open()
+        public void OpenFile()
         {
             OpenFileDialog dlg = new OpenFileDialog();
             dlg.DefaultExt = ".txt";
@@ -120,7 +134,7 @@ namespace ProjApp
             using (StreamReader sr = new StreamReader(FileName))
             {
                 string[] items = null;
-                SPointList.Clear();
+                PointList.Clear();
                 while (true)
                 {
                     string buffer = sr.ReadLine();
@@ -192,7 +206,7 @@ namespace ProjApp
                         pnt.dmsB = double.Parse(items[3]);
                         pnt.dmsL = double.Parse(items[4]);
                     }
-                    this.SPointList.Add(pnt);
+                    this.PointList.Add(pnt);
                 }
             }
         }
@@ -229,7 +243,7 @@ namespace ProjApp
 
                 sw.WriteLine();
                 sw.WriteLine("#点名, X, Y, B, L");
-                foreach (var pnt in SPointList)
+                foreach (var pnt in PointList)
                 {
                     sw.WriteLine(pnt);
                 }
@@ -237,15 +251,15 @@ namespace ProjApp
             }
         }
 
-        public void Save()
+        public void SaveFile()
         {
             if (FileName == "untitle")
-                SaveAs();
+                SaveAsFile();
             else
                 WriteFile();
         }
 
-        public void SaveAs()
+        public void SaveAsFile()
         {
             SaveFileDialog dlg = new SaveFileDialog();
             dlg.DefaultExt = ".txt";
@@ -260,7 +274,7 @@ namespace ProjApp
         {
             IProj proj = new GaussProj(CurrentEllipsoid);
             double L0 = ZXY.SurMath.DmsToRadian(this.dmsL0);
-            foreach (var pnt in SPointList)
+            foreach (var pnt in PointList)
             {
                 double B = ZXY.SurMath.DmsToRadian(pnt.dmsB);
                 double L = ZXY.SurMath.DmsToRadian(pnt.dmsL);
@@ -276,7 +290,7 @@ namespace ProjApp
         {
             IProj proj = new GaussProj(CurrentEllipsoid);
             double L0 = ZXY.SurMath.DmsToRadian(this.dmsL0);
-            foreach (var pnt in SPointList)
+            foreach (var pnt in PointList)
             {
                 var BL = proj.XYtoBL(pnt.X, pnt.Y, L0, YKM, NY);
                 pnt.dmsB = ZXY.SurMath.RadianToDms(BL.B);
@@ -288,7 +302,7 @@ namespace ProjApp
 
         public void ClearXY()
         {
-            foreach (var pnt in SPointList)
+            foreach (var pnt in PointList)
             {
                 pnt.X = 0;
                 pnt.Y = 0;
@@ -299,7 +313,7 @@ namespace ProjApp
 
         public void ClearBL()
         {
-            foreach (var pnt in SPointList)
+            foreach (var pnt in PointList)
             {
                 pnt.dmsB = 0;
                 pnt.dmsL = 0;
@@ -308,13 +322,22 @@ namespace ProjApp
             }
         }
 
-        public void New()
+        public void NewFile()
         {
             CurrentEllipsoid = Ellipsoids["CGCS2000"];
             dmsL0 = 0;
             YKM = 0;
             NY = 0;
-            SPointList.Clear();
+            PointList.Clear();
+        }
+
+        /// <summary>
+        /// 显示坐标方位角计算窗体
+        /// </summary>
+        public void ShowAzimuthWindow()
+        {
+            AzimuthWindow dlg = new AzimuthWindow();
+            dlg.ShowDialog();
         }
     }
 }

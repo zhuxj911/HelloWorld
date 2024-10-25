@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace SmartRoute
+namespace ProjApp
 {
     /// <summary>
-    /// Interaction logic for CurvePage.xaml
+    /// ProjPage.xaml 的交互逻辑
     /// </summary>
-    public partial class CurvePage : Page
+    public partial class ProjPage : Page
     {
-        public CurvePage()
+        public ProjPage()
         {
             InitializeComponent();
         }

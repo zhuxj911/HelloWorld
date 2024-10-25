@@ -4,31 +4,49 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:ProjApp"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" d:DataContext="{d:DesignInstance Type=local:ProjWindowVM}"
     Title="{Binding Title}"
     Width="1000"
     Height="700"
     WindowState="Maximized"
     mc:Ignorable="d">
+
+    <Window.Resources>
+        <Style TargetType="Label">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="Height" Value="25"/>
+            <Setter Property="Margin" Value="5" />
+        </Style>
+    </Window.Resources>
+    
+    <Window.DataContext>
+        <local:ProjWindowVM x:Name="projViewModel"/>
+    </Window.DataContext>
+    
     <DockPanel LastChildFill="True">
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="文件(F)">
-                <MenuItem Click="MenuItem_New_Click" Header="新建..." />
-                <MenuItem Click="MenuItem_Open_Click" Header="打开..." />
-                <MenuItem Click="MenuItem_Save_Click" Header="保存" />
-                <MenuItem Click="MenuItem_SaveAs_Click" Header="另存为..." />
+                <MenuItem Command="{Binding NewFileCommand}" Header="新建..." />
+                <MenuItem Command="{Binding OpenFileCommand}" Header="打开..." />
+                <MenuItem Command="{Binding SaveFileCommand}" Header="保存" />
+                <MenuItem Command="{Binding SaveAsFileCommand}" Header="另存为..." />
                 <Separator />
                 <MenuItem Header="退出" />
             </MenuItem>
 
             <MenuItem Header="测量(G)">
-                <MenuItem Click="MenuItem_BLtoXY_Click" Header="高斯投影正算" />
-                <MenuItem Click="MenuItem_XYtoBL_Click" Header="高斯投影反算" />
+                <MenuItem Command="{Binding BLtoXYCommand}" Header="高斯投影正算" />
+                <MenuItem Command="{Binding XYtoBLCommand}" Header="高斯投影反算" />
                 <Separator />
-                <MenuItem Click="MenuItem_ClearBL_Click" Header="清除BL" />
-                <MenuItem Click="MenuItem_ClearXY_Click" Header="清除XY" />
+                <MenuItem Command="{Binding ClearBLCommand}" Header="清除BL" />
+                <MenuItem Command="{Binding ClearXYCommand}" Header="清除XY" />
                 <Separator />
-                <MenuItem Click="MenuItem_Click" Header="坐标方位角计算" />
+                <MenuItem Command="{Binding ShowAzimuthWindowCommand}" Header="坐标方位角计算" />
             </MenuItem>
 
             <MenuItem Header="帮助(H)">
@@ -118,7 +136,7 @@
                         <DataGrid
                             Margin="2"
                             AutoGenerateColumns="False"
-                            ItemsSource="{Binding SPointList}">
+                            ItemsSource="{Binding PointList}">
                             <DataGrid.Columns>
                                 <DataGridTextColumn
                                     MinWidth="40"
@@ -157,8 +175,8 @@
                 Grid.Column="1"
                 HorizontalAlignment="Stretch"
                 Background="Yellow" />
-            <Border Grid.Column="2" BorderThickness="2">
-                <local:DrawingCanvas x:Name="figureCanvas" Margin="20" />
+            <Border Grid.Column="2" BorderThickness="2">               
+                <local:DrawingCanvas x:Name="figureCanvas" Margin="20"  DrawPoints="{Binding PointList}"/>
             </Border>
         </Grid>
     </DockPanel>

@@ -284,7 +284,6 @@
         private System.Windows.Forms.TextBox textBox_BName;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.TextBox textBox7;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox textBox_a;
         private System.Windows.Forms.GroupBox groupBox3;

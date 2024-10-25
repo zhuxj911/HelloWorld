@@ -12,53 +12,58 @@ namespace SurAppWin
 {
     public partial class Form1 : Form
     {
-        private double xA = 0;
-        private double yA = 0;
-        private double xB = 0;
-        private double yB = 0;
-
         public Form1()
         {
             InitializeComponent();
-            this.textBox_xA.TextChanged += TextBox_xA_TextChanged;
+            this.textBox_xA.TextChanged += TextBox_xA_TextChanged1;
             this.textBox_yA.TextChanged += TextBox_yA_TextChanged;
             this.textBox_xB.TextChanged += TextBox_xB_TextChanged;
-            this.textBox_yB.TextChanged += TextBox_xB_TextChanged;
+            this.textBox_yB.TextChanged += TextBox_yB_TextChanged;
         }
 
-        private void TextBox_xA_TextChanged(object sender, EventArgs e)
-        {
-            if (double.TryParse(this.textBox_xA.Text, out xA) != true)
+        private void TextBox_xA_TextChanged1(object? sender, EventArgs e)
+        {            
+            if (double.TryParse(this.textBox_xA.Text, out double xA) != true)
             {
                 errorProvider1.SetError(textBox_xA, "输入的不是有效数据！");
             }
+            else
+            { errorProvider1.SetError(textBox_xA, null); }
         }
 
-        private void TextBox_yA_TextChanged(object sender, EventArgs e)
+        private void TextBox_yA_TextChanged(object? sender, EventArgs e)
         {
-            if (double.TryParse(this.textBox_xA.Text, out xA) != true)
+            if (double.TryParse(this.textBox_yA.Text, out double yA) != true)
             {
-                errorProvider1.SetError(textBox_xA, "输入的不是有效数据！");
+                errorProvider1.SetError(textBox_yA, "输入的不是有效数据！");
+            }
+            else
+            { errorProvider1.SetError(textBox_yA, null); }
+        }
+
+        private void TextBox_xB_TextChanged(object? sender, EventArgs e)
+        {
+            if (double.TryParse(this.textBox_xB.Text, out double xB) != true)
+            {
+                errorProvider1.SetError(textBox_xB, "输入的不是有效数据！");
+            }
+            else
+            { errorProvider1.SetError(textBox_xB, null); }
+        }
+
+        private void TextBox_yB_TextChanged(object? sender, EventArgs e)
+        {
+            if (double.TryParse(this.textBox_yB.Text, out double yB) != true)
+            {
+                errorProvider1.SetError(textBox_yB, "输入的不是有效数据！");                
+            }
+            else
+            {
+                errorProvider1.SetError(textBox_xB, null);
             }
         }
 
-        private void TextBox_xB_TextChanged(object sender, EventArgs e)
-        {
-            if (double.TryParse(this.textBox_xA.Text, out xA) != true)
-            {
-                errorProvider1.SetError(textBox_xA, "输入的不是有效数据！");
-            }
-        }
-
-        private void TextBox_yB_TextChanged(object sender, EventArgs e)
-        {
-            if (double.TryParse(this.textBox_xA.Text, out xA) != true)
-            {
-                errorProvider1.SetError(textBox_xA, "输入的不是有效数据！");
-            }
-        }
-
-        private void button1_Click(object sender, EventArgs e)
+        private void button1_Click(object? sender, EventArgs e)
         {
             double xA = double.Parse(this.textBox_xA.Text);
             double yA = double.Parse(this.textBox_yA.Text);

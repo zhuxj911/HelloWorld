@@ -5,11 +5,16 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:SmartRoute"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Title="线路要素与线路点坐标计算" Height="700" Width="800">
+    Title="线路要素与线路点坐标计算"
+    Width="800"
+    Height="700">
 
     <Grid>
         <DockPanel LastChildFill="True">
-            <Menu  x:Name="mainmenu" DockPanel.Dock="Top" Background="AliceBlue">
+            <Menu
+                x:Name="mainmenu"
+                Background="AliceBlue"
+                DockPanel.Dock="Top">
                 <MenuItem Header="文件(F)">
                     <MenuItem Header="打开" />
                     <MenuItem Header="保存" />
@@ -29,7 +34,10 @@
             </Menu>
 
             <Grid>
-                <Frame x:Name="routeNavigationFrame" NavigationUIVisibility="Hidden" Source="CurvePage.xaml" />
+                <Frame
+                    x:Name="routeNavigationFrame"
+                    NavigationUIVisibility="Hidden"
+                    Source="./Views/CurvePage.xaml" />
             </Grid>
         </DockPanel>
     </Grid>

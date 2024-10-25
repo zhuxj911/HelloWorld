@@ -3,11 +3,8 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
-
-  <ItemGroup>
-    <None Remove="README.markdown" />
-  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\SurApp.Math\SurApp.Math.csproj" />

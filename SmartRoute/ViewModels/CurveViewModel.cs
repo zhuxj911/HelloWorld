@@ -1,17 +1,53 @@
 ﻿using SmartRoute.Library;
 using SmartRoute.util;
 using System.Collections.ObjectModel;
+using System.Globalization;
+using System.Windows.Data;
+using System.Windows.Media;
 using ZXY;
 
 namespace SmartRoute.ViewModels
 {
+    public enum DataInputMethod
+    {
+        DirAngle, ThreePoint, Line
+    }
+
+    public class DataInputConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            //value 绑定源中的值， 指CurveViewModel中的 DataInputMethod 属性
+            //parameter 绑定时传进来的参数
+            if (value == null || parameter == null)
+                return false;
+            else
+                return value.Equals(parameter); // value == parameter
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            // value 控件的值， 点击 RadioButton 时， 值为true
+            // parameter 为控件RadioButton点击时的传递的参数
+            return parameter;
+        }
+    }
+
     public class CurveViewModel : NotificationObject
     {
         public CurveViewModel()
         {
-            calculateAlphaCommand = new RelayCommand((object? parameter) => OnCalculateAzimuth(), (object? parameter) => true);
-            calculatePointOnCurveByKnoCommand = new RelayCommand((object? parameter) => OnCalculatePointOnCurveByKno(), (object? parameter) => true);
-            calculateBatchPointsOnCurveCommand = new RelayCommand((object? parameter) => OnCalculateBatchPointsOnCurve(), (object? parameter) => true);
+            calculateAlphaCommand = new RelayCommand(
+                (object? parameter) => OnCalculateAzimuth(),
+                (object? parameter) => CanCalculateDirAngle);
+
+            calculatePointOnCurveByKnoCommand = new RelayCommand(
+                (object? parameter) => OnCalculatePointOnCurveByKno(),
+                (object? parameter) => AnyKNo > 0);
+
+            calculateBatchPointsOnCurveCommand = new RelayCommand(
+                (object? parameter) => OnCalculateBatchPointsOnCurve(),
+                (object? parameter) => Length >= 5); //里程间距大于5m时可以使用
 
             //设置测试数据的命令
             setCurveTestDataCommand = new RelayCommand((object? parameter) => OnSetCurveTestData(parameter), (object? parameter) => true);
@@ -26,24 +62,25 @@ namespace SmartRoute.ViewModels
         private RPoint end = new RPoint();
         public RPoint End => end;
 
-        private DataInputMethod dataInputMethod = DataInputMethod.DirAngle;
+        private DataInputMethod dataInput = DataInputMethod.DirAngle;
 
-        public DataInputMethod DataInputMethod
+        public DataInputMethod DataInput
         {
-            get => dataInputMethod;
+            get => dataInput;
             set
             {
-                if (dataInputMethod != value)
+                if (dataInput != value)
                 {
-                    dataInputMethod = value;
+                    dataInput = value;
                     RaisePropertyChanged();
+                    RaisePropertyChanged(() => CanCalculateDirAngle);
                 }
             }
         }
 
-        public bool IsDirAngle
+        public bool CanCalculateDirAngle
         {
-            get => DataInputMethod == DataInputMethod.ThreePoint;
+            get => DataInput == DataInputMethod.ThreePoint;
         }
 
         private double alpha = 0.0;
@@ -262,10 +299,5 @@ namespace SmartRoute.ViewModels
             AnyKNo = 5400.0;
             Length = 20.0;
         }
-    }
-
-    public enum DataInputMethod
-    {
-        DirAngle, ThreePoint, Line
     }
 }
