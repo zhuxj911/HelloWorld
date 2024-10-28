@@ -51,11 +51,11 @@ namespace ProjApp
             {
                 _Gamma = value;
                 RaisePropertyChanged();
-                RaisePropertyChanged("GammaDMSString");
+                RaisePropertyChanged(() => GammaDmsString);
             }
         }
 
-        public string GammaDMSString
+        public string GammaDmsString
         {
             get => ZXY.SurMath.RadianToDmsString(Gamma);
         }

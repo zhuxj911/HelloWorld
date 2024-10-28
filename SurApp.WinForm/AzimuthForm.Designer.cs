@@ -1,6 +1,6 @@
-﻿namespace SurAppWin
+﻿namespace SurApp.WinForm
 {
-    partial class Form1
+    partial class AzimuthForm
     {
         /// <summary>
         ///  Required designer variable.

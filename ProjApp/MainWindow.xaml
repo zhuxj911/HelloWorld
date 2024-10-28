@@ -4,7 +4,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:ProjApp"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" d:DataContext="{d:DesignInstance Type=local:ProjWindowVM}"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="clr-namespace:ProjApp.ViewModels"
     Title="{Binding Title}"
     Width="1000"
     Height="700"
@@ -13,21 +14,21 @@
 
     <Window.Resources>
         <Style TargetType="Label">
-            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center" />
         </Style>
         <Style TargetType="TextBox">
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center" />
         </Style>
         <Style TargetType="Button">
-            <Setter Property="Height" Value="25"/>
+            <Setter Property="Height" Value="25" />
             <Setter Property="Margin" Value="5" />
         </Style>
     </Window.Resources>
-    
+
     <Window.DataContext>
-        <local:ProjWindowVM x:Name="projViewModel"/>
+        <vm:ProjWindowVM x:Name="projViewModel" />
     </Window.DataContext>
-    
+
     <DockPanel LastChildFill="True">
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="文件(F)">
@@ -160,7 +161,7 @@
                                     Header="Y(E)" />
                                 <DataGridTextColumn
                                     MinWidth="100"
-                                    Binding="{Binding GammaDMSString, Mode=OneWay}"
+                                    Binding="{Binding GammaDmsString, Mode=OneWay}"
                                     Header="子午线收敛角(γ)" />
                                 <DataGridTextColumn
                                     MinWidth="100"
@@ -175,8 +176,11 @@
                 Grid.Column="1"
                 HorizontalAlignment="Stretch"
                 Background="Yellow" />
-            <Border Grid.Column="2" BorderThickness="2">               
-                <local:DrawingCanvas x:Name="figureCanvas" Margin="20"  DrawPoints="{Binding PointList}"/>
+            <Border Grid.Column="2" BorderThickness="2">
+                <local:DrawingCanvas
+                    x:Name="figureCanvas"
+                    Margin="20"
+                    DrawPoints="{Binding PointList}" />
             </Border>
         </Grid>
     </DockPanel>

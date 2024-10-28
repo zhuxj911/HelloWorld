@@ -29,6 +29,7 @@ namespace SmartRoute.ViewModels
         {
             // value 控件的值， 点击 RadioButton 时， 值为true
             // parameter 为控件RadioButton点击时的传递的参数
+            // return value.Equals(true) ? parameter : Binding.DoNothing;
             return parameter;
         }
     }

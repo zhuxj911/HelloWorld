@@ -6,7 +6,8 @@ HelloWorld of C# Demo Application
 ## 日志
 2024.10.23 加入线路计算程序SmartRoute，重构了整个解决方案对架构，将原SurApp更名为ProjApp。
 2024.10.24 将整个解决方案名称改为SurApp
-
+2024.10.27 VM中将XyToBl 与 BlToXy 加入到多线程环境 
+2024.10.28 将排序结果用WinForm形似进行展示
 
 ## git branch
 

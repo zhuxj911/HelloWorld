@@ -8,11 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace SurAppWin
+namespace SurApp.WinForm
 {
-    public partial class Form1 : Form
+    public partial class AzimuthForm : Form
     {
-        public Form1()
+        public AzimuthForm()
         {
             InitializeComponent();
             this.textBox_xA.TextChanged += TextBox_xA_TextChanged1;
@@ -22,7 +22,7 @@ namespace SurAppWin
         }
 
         private void TextBox_xA_TextChanged1(object? sender, EventArgs e)
-        {            
+        {
             if (double.TryParse(this.textBox_xA.Text, out double xA) != true)
             {
                 errorProvider1.SetError(textBox_xA, "输入的不是有效数据！");
@@ -55,7 +55,7 @@ namespace SurAppWin
         {
             if (double.TryParse(this.textBox_yB.Text, out double yB) != true)
             {
-                errorProvider1.SetError(textBox_yB, "输入的不是有效数据！");                
+                errorProvider1.SetError(textBox_yB, "输入的不是有效数据！");
             }
             else
             {
