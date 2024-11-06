@@ -8,7 +8,7 @@ namespace DrawShape
     //此处不希望该类受Polygon类不恰当的继承，所以声明为sealed，因此不能被继承
     public sealed class Polyline : Shape 
     {
-        private List<Point> points = new List<Point>();
+        private List<Point> vertices = new List<Point>();
   
         public Polyline()
         {
@@ -18,7 +18,7 @@ namespace DrawShape
         /// <summary>
         /// Polyline的顶点个数
         /// </summary>
-        public int Count => this.points.Count;
+        public int Count => this.vertices.Count;
 
         /// <summary>
         /// 索引，新的C#知识点
@@ -31,9 +31,9 @@ namespace DrawShape
         {
             get
             {
-                if (index < 0 || index >= this.points.Count)
+                if (index < 0 || index >= this.vertices.Count)
                     throw new IndexOutOfRangeException("下标溢出！！！");
-                return this.points[index];
+                return this.vertices[index];
             }
         }
 

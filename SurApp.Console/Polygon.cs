@@ -32,7 +32,10 @@ namespace DrawShape
             if (this.Count < 3) return;
 
             //下面这句用Polyline类中的长度 + 首尾两点的距离
-            this.length = polyline.Length + this[this.Count - 1].Distance(this[0]);
+            // this.length = polyline.Length + this[this.Count - 1].Distance(this[0]);
+            //C# Version 9.0 语法，从后向前计算用 ^ , 区域可用 ..  
+            this.length = polyline.Length + this[^1].Distance(this[0]);
+
 
             for (int i = 0; i < this.Count; i++)
             {
@@ -41,7 +44,7 @@ namespace DrawShape
                 //if (j == this.Count) j = 0; 
                 area += this[i].X * this[j].Y - this[j].X * this[i].Y;
             }
-            this.area *= 0.5;            
+            this.area = 0.5 * Math.Abs(area);            
         }
 
         public void Add(Point pt)
