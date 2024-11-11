@@ -1,79 +1,114 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Text;
+﻿using System.Windows.Input;
 using ZXY;
 
-namespace SurWpfLib
+namespace SurApp.WpfLibrary;
+
+public class AzimuthWindowVM : NotificationObject
 {
-    public class AzimuthWindowVM : NotificationObject
+    public AzimuthWindowVM()
     {
-        private Point _A = new Point
+#if DEBUG
+        A = new()
         {
-            Name = "A",
+            Name = "GP11",
             X = 50342.464,
             Y = 3528.978
         };
 
-        public Point A
+        B = new()
         {
-            get => _A;
-        }
-
-        private Point _B = new Point
-        {
-            Name = "B",
+            Name = "GP12",
             X = 50289.874,
             Y = 3423.232
         };
+#endif
+    }
 
-        public Point B
+
+    private Point _A = new();
+
+    public Point A
+    {
+        get => _A;
+        set
         {
-            get => _B;
-        }
-
-        private string _AZName = "坐标方位角";
-
-        public string AZName
-        {
-            get { return _AZName; }
-            set
-            {
-                _AZName = value;
-                RaisePropertyChanged("AZName");
-            }
-        }
-
-        private string _azValue;
-
-        public string AZValue
-        {
-            get { return _azValue; }
-            set
-            {
-                _azValue = value;
-                RaisePropertyChanged("AZValue");
-            }
-        }
-
-        private double _dist;
-
-        public double Dist
-        {
-            get { return Math.Round(_dist, 3); }
-            set
-            {
-                _dist = value;
-                RaisePropertyChanged("Dist");
-            }
-        }
-
-        public void CalculateAzimuth()
-        {
-            var ad = ZXY.SurMath.Azimuth(A.X, A.Y, B.X, B.Y);
-            AZValue = ZXY.SurMath.RadianToDmsString(ad.a);
-            Dist = ad.d;
-            AZName = $"{A.Name} -> {B.Name} 坐标方位角";
+            _A = value;
+            RaisePropertyChanged();
         }
     }
+
+
+    private Point _B = new();
+
+    public Point B
+    {
+        get => _B;
+        set
+        {
+            _B = value;
+            RaisePropertyChanged();
+        }
+    }
+
+    /// <summary>
+    /// 控制计算按钮是否可用
+    /// </summary>
+    public bool CanCalculate => Math.Abs(A.X - B.X) >= 0.0001 || Math.Abs(A.Y - B.Y) >= 0.0001;
+
+
+    private string _AzName = "A -> B 坐标方位角";
+
+    public string AzName
+    {
+        get { return _AzName; }
+        set
+        {
+            _AzName = value;
+            RaisePropertyChanged();
+        }
+    }
+
+    private string _azValue = "";
+
+    public string AzValue
+    {
+        get { return _azValue; }
+        set
+        {
+            _azValue = value;
+            RaisePropertyChanged();
+        }
+    }
+
+    private double _dist;
+
+    public double Dist
+    {
+        get { return Math.Round(_dist, 3); }
+        set
+        {
+            _dist = value;
+            RaisePropertyChanged();
+        }
+    }
+
+    public void CalculateAzimuth()
+    {
+        var ad = ZXY.SurMath.Azimuth(A.X, A.Y, B.X, B.Y);
+        AzValue = ZXY.SurMath.RadianToDmsString(ad.a);
+        Dist = ad.d;
+        AzName = $"{A.Name} -> {B.Name} 坐标方位角";
+    }
+
+    public ICommand SwitchCommand => new RelayCommand((paramters) => SwitchAB());
+
+    private void SwitchAB()
+    {
+        //var t = A;
+        //A = B;
+        //B = t;
+        (A, B) = (B, A);
+    }
+
+    public ICommand CalculateCommand => new RelayCommand((paramters) => CalculateAzimuth(), (paramters) => CanCalculate);
 }

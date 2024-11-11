@@ -1,6 +1,6 @@
 ﻿using System.Windows.Input;
 
-namespace SmartRoute.util;
+namespace SurApp.WpfLibrary;
 
 public class RelayCommand : ICommand
 {
@@ -18,6 +18,14 @@ public class RelayCommand : ICommand
     {
         _execute = execute;
         _canExecute = canExecute;
+    }
+
+    /// <summary>
+    /// 默认能执行的命令，不需要传入canExecute
+    /// </summary>
+    /// <param name="execute"></param>
+    public RelayCommand(Action<object?> execute) : this(execute, (paramters) => true)
+    {
     }
 
     //Determines whether the command can execute in its current state.

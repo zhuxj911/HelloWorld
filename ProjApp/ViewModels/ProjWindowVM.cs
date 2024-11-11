@@ -1,7 +1,6 @@
 ﻿using Microsoft.Win32;
 using ProjApp.Library;
-using SmartRoute.util;
-using SurWpfLib;
+using SurApp.WpfLibrary;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -62,10 +61,8 @@ public class ProjWindowVM : NotificationObject
         get => ellipsoidList;
     }
 
-    public Dictionary<string, Ellipsoid> Ellipsoids
-    {
-        get => EllipsoidFactory.Ellipsoids;
-    }
+    public static Dictionary<string, Ellipsoid> Ellipsoids => EllipsoidFactory.Ellipsoids;
+
 
     private Ellipsoid currentEllipsoid = EllipsoidFactory.EllipsoidList[0];
 

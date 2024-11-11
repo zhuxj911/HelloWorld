@@ -8,7 +8,7 @@ namespace DrawShape
     //此处不希望该类受Polygon类不恰当的继承，所以声明为sealed，因此不能被继承
     public sealed class Polyline : Shape 
     {
-        private List<Point> vertices = new List<Point>();
+        private readonly List<Point> vertices = [];
   
         public Polyline()
         {
@@ -50,13 +50,13 @@ namespace DrawShape
 
         public void Add(Point pt)
         {
-            this.points.Add(pt);            
+            this.vertices.Add(pt);            
             Calculate();
         }
 
         public void AddRange(IEnumerable<Point> collection)
         {
-            this.points.AddRange(collection);
+            this.vertices.AddRange(collection);
             Calculate();
         }
 

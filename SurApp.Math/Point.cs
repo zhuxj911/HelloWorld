@@ -1,10 +1,8 @@
-﻿using System;
-
-namespace ZXY;
+﻿namespace ZXY;
 
 public class Point : NotificationObject
 {
-    private string name;
+    private string name = "";
 
     public string Name
     {
@@ -19,7 +17,7 @@ public class Point : NotificationObject
         }
     }
 
-    private string code;
+    private string code = "";
 
     public string Code
     {
@@ -34,7 +32,7 @@ public class Point : NotificationObject
         }
     }
 
-    private double x;
+    private double x = 0.0;
 
     public double X
     {
@@ -49,7 +47,7 @@ public class Point : NotificationObject
         }
     }
 
-    private double y;
+    private double y = 0.0;
 
     public double Y
     {
@@ -64,7 +62,7 @@ public class Point : NotificationObject
         }
     }
 
-    private double z;
+    private double z = 0.0;
 
     public double Z
     {
@@ -83,9 +81,6 @@ public class Point : NotificationObject
 
     public Point()
     {
-        name = "";
-        code = "";
-        x = y = z = 0;
     }
 
     public Point(string name, string code, double x, double y, double z)
@@ -97,28 +92,18 @@ public class Point : NotificationObject
         this.z = z;
     }
 
-    public Point(double x, double y, double z)
+    public Point(double x, double y, double z) : this("", "", x, y, z)
     {
-        name = "";
-        code = "";
-        this.x = x;
-        this.y = y;
-        this.z = z;
     }
 
-    public Point(double x, double y)
-    {
-        name = "";
-        code = "";
-        this.x = x;
-        this.y = y;
-        this.z = 0;
+    public Point(double x, double y) : this("", "", x, y, 0)
+    {   
     }
 
-    #endregion 构造函数
+#endregion 构造函数
 
-    public override string ToString()
-    {
-        return $"Point：{Name}, {Code}, {X}, {Y}, {Z}";
-    }
+public override string ToString()
+{
+    return $"Point：{Name}, {Code}, {X}, {Y}, {Z}";
+}
 }
